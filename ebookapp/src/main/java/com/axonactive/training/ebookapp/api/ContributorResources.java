@@ -16,7 +16,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping(PublisherResources.PATH)
+@RequestMapping(ContributorResources.PATH)
 public class ContributorResources {
     public static final String PATH = "/api/contributors";
 
