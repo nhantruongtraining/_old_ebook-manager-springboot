@@ -46,7 +46,9 @@ public class EbookResources {
     @PostMapping
     public ResponseEntity<EbookDto> create(@RequestBody EbookRequest ebook) {
         Ebook createdEbook = ebookService.save(new Ebook(
-                ebook.getTitle(), ebook.getDescription(), ebook.getPublishYear(),
+                ebook.getTitle(),
+                ebook.getDescription(),
+                ebook.getPublishYear(),
                 languageService.findById(ebook.getLanguageId()).orElseThrow(() -> new ResourceNotFoundException("Language not found: " + ebook.getLanguageId())),
                 publisherService.findById(ebook.getPublisherId()).orElseThrow(() -> new ResourceNotFoundException("Publisher not found: " + ebook.getPublisherId())),
                 categoryService.findById(ebook.getCategoryId()).orElseThrow(() -> new ResourceNotFoundException("Category not found: " + ebook.getCategoryId()))));
