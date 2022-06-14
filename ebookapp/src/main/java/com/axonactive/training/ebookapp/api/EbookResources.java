@@ -2,10 +2,7 @@ package com.axonactive.training.ebookapp.api;
 
 import com.axonactive.training.ebookapp.api.request.EbookRequest;
 import com.axonactive.training.ebookapp.entity.Ebook;
-import com.axonactive.training.ebookapp.service.CategoryService;
-import com.axonactive.training.ebookapp.service.EbookService;
-import com.axonactive.training.ebookapp.service.LanguageService;
-import com.axonactive.training.ebookapp.service.PublisherService;
+import com.axonactive.training.ebookapp.service.*;
 import com.axonactive.training.ebookapp.service.dto.EbookDto;
 import com.axonactive.training.ebookapp.service.mapper.EbookMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,8 +46,7 @@ public class EbookResources {
     @PostMapping
     public ResponseEntity<EbookDto> create(@RequestBody EbookRequest ebook) {
         Ebook createdEbook = ebookService.save(new Ebook(
-                null, ebook.getTitle(), ebook.getDescription(), ebook.getPublishYear(),
-                "path", LocalDateTime.now(),
+                ebook.getTitle(), ebook.getDescription(), ebook.getPublishYear(),
                 languageService.findById(ebook.getLanguageId()).orElseThrow(() -> new ResourceNotFoundException("Language not found: " + ebook.getLanguageId())),
                 publisherService.findById(ebook.getPublisherId()).orElseThrow(() -> new ResourceNotFoundException("Publisher not found: " + ebook.getPublisherId())),
                 categoryService.findById(ebook.getCategoryId()).orElseThrow(() -> new ResourceNotFoundException("Category not found: " + ebook.getCategoryId()))));

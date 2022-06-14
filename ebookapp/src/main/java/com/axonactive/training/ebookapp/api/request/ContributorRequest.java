@@ -12,10 +12,11 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ContributorRequest {
+    private UUID ebookId;
+    private Integer authorId;
     private String coAuthor;
     private String editor;
     private String illustrator;
     private String translator;
-    private Integer authorId;
-    private UUID ebookId;
+
 }
