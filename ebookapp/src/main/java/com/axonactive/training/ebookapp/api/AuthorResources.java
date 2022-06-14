@@ -2,6 +2,7 @@ package com.axonactive.training.ebookapp.api;
 
 import com.axonactive.training.ebookapp.api.request.AuthorRequest;
 import com.axonactive.training.ebookapp.entity.Author;
+import com.axonactive.training.ebookapp.entity.AuthorStatus;
 import com.axonactive.training.ebookapp.service.AuthorService;
 import com.axonactive.training.ebookapp.service.dto.AuthorDto;
 import com.axonactive.training.ebookapp.service.mapper.AuthorMapper;
@@ -38,7 +39,7 @@ public class AuthorResources {
     public ResponseEntity<AuthorDto> create(@RequestBody AuthorRequest author) {
         Author createdAuthor = authorService.save(new Author(
                 null, author.getFirstName(), author.getLastName(),
-                author.getDateOfBirth(), author.getStatus()));
+                author.getDateOfBirth(), AuthorStatus.ACTIVE));
 
         return ResponseEntity.created(URI.create(PATH + "/" + createdAuthor.getId())).body(AuthorMapper.INSTANCE.toDto(createdAuthor));
     }

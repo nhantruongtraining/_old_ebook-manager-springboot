@@ -1,7 +1,8 @@
 package com.axonactive.training.ebookapp.entity;
 
+//import com.axonactive.training.ebookapp.service.converter.AuthorStatusConverter;
+import com.axonactive.training.ebookapp.service.converter.AuthorStatusConverter;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -20,5 +21,7 @@ public class Author {
     private String firstName;
     private String lastName;
     private LocalDate dateOfBirth;
-    private Integer status;
+
+    @Convert(converter = AuthorStatusConverter.class)
+    private AuthorStatus status;
 }
