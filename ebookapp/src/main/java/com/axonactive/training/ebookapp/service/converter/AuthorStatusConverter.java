@@ -10,7 +10,7 @@ import java.util.Arrays;
 public class AuthorStatusConverter implements AttributeConverter<AuthorStatus, Integer> {
     @Override
     public Integer convertToDatabaseColumn(AuthorStatus authorStatus) {
-        return (authorStatus != null)? authorStatus.getValue() : 1;
+        return (authorStatus != null)? authorStatus.getValue() : 2;
     }
 
     @Override
@@ -18,6 +18,6 @@ public class AuthorStatusConverter implements AttributeConverter<AuthorStatus, I
         return Arrays.stream(AuthorStatus.values())
                 .filter(each -> each.getValue() == integer)
                 .findFirst()
-                .orElse(AuthorStatus.ACTIVE);
+                .orElse(AuthorStatus.UNKNOWN);
     }
 }

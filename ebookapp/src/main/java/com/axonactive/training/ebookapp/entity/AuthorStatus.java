@@ -3,7 +3,8 @@ package com.axonactive.training.ebookapp.entity;
 public enum AuthorStatus {
     DECEASED (-1),
     NONACTIVE (0),
-    ACTIVE (1);
+    ACTIVE (1),
+    UNKNOWN (2);
 
 
     private int value;
