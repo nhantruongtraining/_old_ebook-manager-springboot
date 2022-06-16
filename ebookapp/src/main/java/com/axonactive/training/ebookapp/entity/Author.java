@@ -1,6 +1,5 @@
 package com.axonactive.training.ebookapp.entity;
 
-//import com.axonactive.training.ebookapp.service.converter.AuthorStatusConverter;
 import com.axonactive.training.ebookapp.service.converter.AuthorStatusConverter;
 import lombok.AllArgsConstructor;
 import lombok.Data;

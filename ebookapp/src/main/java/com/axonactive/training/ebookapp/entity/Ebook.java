@@ -27,6 +27,11 @@ public class Ebook {
 
     private LocalDateTime uploadTimestamp;
 
+    private boolean favorite;
+
+    @Enumerated(EnumType.STRING)
+    private EbookStatus status;
+
     @ManyToOne
     @JoinColumn
     private Language language;
