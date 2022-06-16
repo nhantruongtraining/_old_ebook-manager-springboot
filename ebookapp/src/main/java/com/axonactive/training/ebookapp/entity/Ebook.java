@@ -1,6 +1,7 @@
 package com.axonactive.training.ebookapp.entity;
 
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
@@ -24,11 +25,11 @@ public class Ebook {
     private Integer publishYear;
 
     private String coverImage;
-
+    @CreationTimestamp
     private LocalDateTime uploadTimestamp;
-
+    @Column
     private boolean favorite;
-
+    @Column
     @Enumerated(EnumType.STRING)
     private EbookStatus status;
 
@@ -49,7 +50,7 @@ public class Ebook {
         this.description = description;
         this.publishYear = publishYear;
         this.coverImage = "path";
-        this.uploadTimestamp = LocalDateTime.now();
+//        this.uploadTimestamp = LocalDateTime.now();
         this.language = language;
         this.publisher = publisher;
         this.category = category;
