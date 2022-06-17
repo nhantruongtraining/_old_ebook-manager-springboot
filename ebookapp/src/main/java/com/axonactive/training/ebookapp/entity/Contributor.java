@@ -1,7 +1,6 @@
 package com.axonactive.training.ebookapp.entity;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -16,10 +15,9 @@ public class Contributor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String coAuthor;
-    private String editor;
-    private String illustrator;
-    private String translator;
+    @Column
+    @Enumerated(EnumType.STRING)
+    private ContributorType type;
 
     @ManyToOne
     @JoinColumn

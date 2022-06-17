@@ -5,9 +5,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class ContributorRequest {
-    private String ebook;
-    private String type;
+@AllArgsConstructor
+public class LanguageRequest {
+    private String name;
+    private String code;
 }

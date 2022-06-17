@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.util.List;
 
-@PreAuthorize("hasRole('ADMIN')")
 @RestController
 @RequestMapping(PublisherResources.PATH)
 public class PublisherResources {
@@ -42,7 +41,8 @@ public class PublisherResources {
                 null, publisher.getName(), publisher.getLocation(),
                 publisher.getUrl(), publisher.getStatus()));
 
-        return ResponseEntity.created(URI.create(PATH + "/" + createdPublisher.getId())).body(PublisherMapper.INSTANCE.toDto(createdPublisher));
+        return ResponseEntity.created(URI.create(PATH + "/" + createdPublisher.getId()))
+                .body(PublisherMapper.INSTANCE.toDto(createdPublisher));
     }
 
     @PutMapping("/{id}")

@@ -1,7 +1,8 @@
 package com.axonactive.training.ebookapp.entity;
 
-public enum EbookStatus {
+public enum UserEbookStatus {
     READING,
     TO_BE_READ,
-    COMPLETED
+    COMPLETED,
+    NONE
 }

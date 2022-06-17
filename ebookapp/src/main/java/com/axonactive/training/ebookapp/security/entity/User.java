@@ -24,8 +24,14 @@ public class User {
 	
 	@JsonIgnore
 	private String password;
-	
+	@Column
 	private Boolean active;
+	@Column
+	private String firstName;
+	@Column
+	private String lastName;
+	@Column
+	private String email;
 
 	@OneToMany(mappedBy = "users")
 	private List<UserRoleAssignment> roles = new ArrayList<>();

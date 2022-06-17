@@ -23,14 +23,14 @@ public class AuthorResources {
     @Autowired
     AuthorService authorService;
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+//    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping
     public ResponseEntity<List<AuthorDto>> getAll() {
         List<Author> authorList = authorService.getAll();
         return ResponseEntity.ok(AuthorMapper.INSTANCE.toDtos(authorList));
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+//    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping("/{id}")
     public ResponseEntity<AuthorDto> getAuthorById(@PathVariable Integer id) throws ResourceNotFoundException {
         Author author = authorService.findById(id)
@@ -38,17 +38,17 @@ public class AuthorResources {
         return ResponseEntity.ok().body(AuthorMapper.INSTANCE.toDto(author));
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<AuthorDto> create(@RequestBody AuthorRequest author) {
         Author createdAuthor = authorService.save(new Author(
                 null, author.getFirstName(), author.getLastName(),
-                author.getDateOfBirth(), AuthorStatus.ACTIVE));
+                author.getDateOfBirth(), AuthorStatus.UNKNOWN));
 
         return ResponseEntity.created(URI.create(PATH + "/" + createdAuthor.getId())).body(AuthorMapper.INSTANCE.toDto(createdAuthor));
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<AuthorDto> update(@PathVariable(value = "id") Integer id,
                                             @RequestBody AuthorRequest authorUpdate) throws ResourceNotFoundException {
@@ -61,7 +61,7 @@ public class AuthorResources {
         return ResponseEntity.ok(AuthorMapper.INSTANCE.toDto(editedAuthor));
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable(value = "id") Integer id) throws ResourceNotFoundException {
         authorService.deleteById(id);

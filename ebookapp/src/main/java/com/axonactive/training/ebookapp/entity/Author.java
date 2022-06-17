@@ -16,9 +16,11 @@ public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
+    @Column
     private String firstName;
+    @Column
     private String lastName;
+    @Column
     private LocalDate dateOfBirth;
 
     @Convert(converter = AuthorStatusConverter.class)
