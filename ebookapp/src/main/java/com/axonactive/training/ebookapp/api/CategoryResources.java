@@ -28,7 +28,7 @@ public class CategoryResources {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CategoryDto> getCategoryById(@PathVariable Integer id) throws ResourceNotFoundException {
+    public ResponseEntity<CategoryDto> getById(@PathVariable Integer id) throws ResourceNotFoundException {
         Category category = categoryService.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id + " not found"));
         return ResponseEntity.ok().body(CategoryMapper.INSTANCE.toDto(category));

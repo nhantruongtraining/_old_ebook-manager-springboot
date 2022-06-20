@@ -49,9 +49,9 @@ public class EbookResources {
                 ebook.getTitle(),
                 ebook.getDescription(),
                 ebook.getPublishYear(),
-                languageService.findById(ebook.getLanguageId()).orElseThrow(() -> new ResourceNotFoundException("Language not found: " + ebook.getLanguageId())),
-                publisherService.findById(ebook.getPublisherId()).orElseThrow(() -> new ResourceNotFoundException("Publisher not found: " + ebook.getPublisherId())),
-                categoryService.findById(ebook.getCategoryId()).orElseThrow(() -> new ResourceNotFoundException("Category not found: " + ebook.getCategoryId()))));
+                languageService.findById(ebook.getLanguageId()).get(),
+                publisherService.findById(ebook.getPublisherId()).get(),
+                categoryService.findById(ebook.getCategoryId()).get()));
 
         return ResponseEntity.created(URI.create(PATH + "/" + createdEbook.getId())).body(EbookMapper.INSTANCE.toDto(createdEbook));
     }
