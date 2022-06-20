@@ -4,11 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserEbookRequest {
-    private String ebookTitle;
+    private UUID ebookId;
+    private Integer userId;
     private boolean favorite;
     private String ebookStatus;
 

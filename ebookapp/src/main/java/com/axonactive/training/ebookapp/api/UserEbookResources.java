@@ -3,6 +3,8 @@ package com.axonactive.training.ebookapp.api;
 import com.axonactive.training.ebookapp.api.request.UserEbookRequest;
 import com.axonactive.training.ebookapp.entity.UserEbook;
 import com.axonactive.training.ebookapp.exception.ResourceNotFoundException;
+import com.axonactive.training.ebookapp.security.service.UserService;
+import com.axonactive.training.ebookapp.service.EbookService;
 import com.axonactive.training.ebookapp.service.UserEbookService;
 import com.axonactive.training.ebookapp.service.dto.UserEbookDto;
 import com.axonactive.training.ebookapp.service.mapper.UserEbookMapper;
@@ -20,6 +22,10 @@ public class UserEbookResources {
 
     @Autowired
     UserEbookService userEbookService;
+    @Autowired
+    EbookService ebookService;
+    @Autowired
+    UserService userService;
 
     @GetMapping
     public ResponseEntity<List<UserEbookDto>> getAll() {
@@ -35,9 +41,12 @@ public class UserEbookResources {
     }
 
     @PostMapping
-    public ResponseEntity<UserEbookDto> create(@RequestBody UserEbookRequest userEbook) {
+    public ResponseEntity<UserEbookDto> create(@RequestBody UserEbookRequest userEbook) throws ResourceNotFoundException {
         UserEbook createdUserEbook = userEbookService.save(new UserEbook(
-            userEbook.getEbookTitle(), userEbook.isFavorite(), userEbook.getEbookStatus()));
+                ebookService.findById(userEbook.getEbookId()).orElseThrow(() -> new ResourceNotFoundException("UUID not found: " + userEbook.getEbookId())),
+                userService.findById(userEbook.getUserId()).orElseThrow(() -> new ResourceNotFoundException("User ID not found: " + userEbook.getUserId())),
+                userEbook.isFavorite(),
+                userEbook.getEbookStatus()));
         return ResponseEntity.created(URI.create(PATH + "/" + createdUserEbook.getId())).body(UserEbookMapper.INSTANCE.toDto(createdUserEbook));
     }
 
