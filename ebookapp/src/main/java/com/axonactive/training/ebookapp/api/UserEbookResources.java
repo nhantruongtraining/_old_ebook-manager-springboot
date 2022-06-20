@@ -2,6 +2,7 @@ package com.axonactive.training.ebookapp.api;
 
 import com.axonactive.training.ebookapp.api.request.UserEbookRequest;
 import com.axonactive.training.ebookapp.entity.UserEbook;
+import com.axonactive.training.ebookapp.entity.UserEbookStatus;
 import com.axonactive.training.ebookapp.exception.ResourceNotFoundException;
 import com.axonactive.training.ebookapp.security.service.UserService;
 import com.axonactive.training.ebookapp.service.EbookService;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -42,11 +44,14 @@ public class UserEbookResources {
 
     @PostMapping
     public ResponseEntity<UserEbookDto> create(@RequestBody UserEbookRequest userEbook) throws ResourceNotFoundException {
-        UserEbook createdUserEbook = userEbookService.save(new UserEbook(
-                ebookService.findById(userEbook.getEbookId()).orElseThrow(() -> new ResourceNotFoundException("UUID not found: " + userEbook.getEbookId())),
-                userService.findById(userEbook.getUserId()).orElseThrow(() -> new ResourceNotFoundException("User ID not found: " + userEbook.getUserId())),
+        UserEbook createdUserEbook = userEbookService.save(new UserEbook(null,
+                LocalDateTime.now(), "path",
                 userEbook.isFavorite(),
-                userEbook.getEbookStatus()));
+                UserEbookStatus.valueOf(userEbook.getEbookStatus()),
+                ebookService.findById(userEbook.getEbookId()).get(),
+                userService.findById(userEbook.getUserId()).get()));
+
+
         return ResponseEntity.created(URI.create(PATH + "/" + createdUserEbook.getId())).body(UserEbookMapper.INSTANCE.toDto(createdUserEbook));
     }
 

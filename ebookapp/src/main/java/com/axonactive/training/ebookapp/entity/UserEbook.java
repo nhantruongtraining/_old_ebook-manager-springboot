@@ -40,10 +40,4 @@ public class UserEbook {
     @JoinColumn
     private User user;
 
-    public UserEbook(Ebook ebook, User user, boolean favorite, String ebookStatus) {
-        this.ebook = ebook;
-        this.user = user;
-        this.favorite = favorite;
-        this.status = UserEbookStatus.valueOf(ebookStatus);
-    }
 }
