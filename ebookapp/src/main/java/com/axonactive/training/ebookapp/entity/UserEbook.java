@@ -39,4 +39,7 @@ public class UserEbook {
     @ManyToOne
     @JoinColumn
     private User user;
+
+    public UserEbook(String ebookTitle, boolean favorite, String ebookStatus) {
+    }
 }

@@ -7,7 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ContributorRequest {
+public class UserEbookRequest {
     private String ebookTitle;
-    private String contributorType;
+    private boolean favorite;
+    private String ebookStatus;
+
 }
