@@ -2,11 +2,11 @@ package com.axonactive.training.ebookapp.api;
 
 import com.axonactive.training.ebookapp.api.request.PublisherRequest;
 import com.axonactive.training.ebookapp.entity.Publisher;
+import com.axonactive.training.ebookapp.exception.ResourceNotFoundException;
 import com.axonactive.training.ebookapp.service.PublisherService;
 import com.axonactive.training.ebookapp.service.dto.PublisherDto;
 import com.axonactive.training.ebookapp.service.mapper.PublisherMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;

@@ -16,6 +16,4 @@ public class Category {
     private Integer id;
     @Column
     private String value;
-    @Column
-    private Integer status;
 }
