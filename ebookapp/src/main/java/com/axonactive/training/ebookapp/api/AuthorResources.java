@@ -43,7 +43,7 @@ public class AuthorResources {
     public ResponseEntity<AuthorDto> create(@RequestBody AuthorRequest author) {
         Author createdAuthor = authorService.save(new Author(
                 null, author.getFirstName(), author.getLastName(),
-                author.getDateOfBirth(), AuthorStatus.UNKNOWN));
+                author.getDateOfBirth(), author.getStatus()));
 
         return ResponseEntity.created(URI.create(PATH + "/" + createdAuthor.getId())).body(AuthorMapper.INSTANCE.toDto(createdAuthor));
     }

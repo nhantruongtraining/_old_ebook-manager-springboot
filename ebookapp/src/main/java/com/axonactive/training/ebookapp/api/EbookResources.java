@@ -37,7 +37,7 @@ public class EbookResources {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<EbookDto> getEbookById(@PathVariable UUID id) throws ResourceNotFoundException {
+    public ResponseEntity<EbookDto> getEbookById(@PathVariable Integer id) throws ResourceNotFoundException {
         Ebook ebook = ebookService.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id + " not found."));
         return ResponseEntity.ok().body(EbookMapper.INSTANCE.toDto(ebook));
@@ -57,7 +57,7 @@ public class EbookResources {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<EbookDto> update(@PathVariable(value = "id") UUID id, @RequestBody EbookRequest ebookUpdate) throws ResourceNotFoundException {
+    public ResponseEntity<EbookDto> update(@PathVariable(value = "id") Integer id, @RequestBody EbookRequest ebookUpdate) throws ResourceNotFoundException {
         Ebook ebook = ebookService.findById(id).orElseThrow(() -> new ResourceNotFoundException("ID not found: " + id));
         ebook.setTitle(ebookUpdate.getTitle());
         ebook.setDescription(ebookUpdate.getDescription());
@@ -70,7 +70,7 @@ public class EbookResources {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable(value = "id") UUID id) throws ResourceNotFoundException {
+    public ResponseEntity<Void> delete(@PathVariable(value = "id") Integer id) throws ResourceNotFoundException {
         ebookService.deleteById(id);
         return ResponseEntity.noContent().build();
     }

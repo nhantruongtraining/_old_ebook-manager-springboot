@@ -9,6 +9,6 @@ import java.util.UUID;
 public interface EbookService {
     List<Ebook> getAll();
     Ebook save(Ebook ebook);
-    Optional<Ebook> findById(UUID id);
-    void deleteById(UUID id);
+    Optional<Ebook> findById(Integer id);
+    void deleteById(Integer id);
 }

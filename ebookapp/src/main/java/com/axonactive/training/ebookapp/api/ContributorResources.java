@@ -44,7 +44,7 @@ public class ContributorResources {
     @PostMapping
     public ResponseEntity<ContributorDto> create(@RequestBody ContributorRequest contributor) {
         Contributor createdContributor = contributorService.save(new Contributor(null,
-        ContributorType.valueOf(contributor.getContributorType()),
+        ContributorType.valueOf(String.valueOf(contributor.getContributorType())),
         authorService.findById(contributor.getAuthorId()).get(),
         ebookService.findById(contributor.getEbookId()).get()));
 

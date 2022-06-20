@@ -6,6 +6,8 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -14,10 +16,8 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Ebook {
     @Id
-    @Column(name = "id", columnDefinition = "uuid")
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     @Column
     private String title;
@@ -26,7 +26,7 @@ public class Ebook {
     @Column
     private Integer publishYear;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
     private Language language;
 
@@ -37,6 +37,10 @@ public class Ebook {
     @ManyToOne
     @JoinColumn
     private Category category;
+
+//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "writtenBy")
+//    @JoinColumn
+//    private List<Contributor> contributors = new ArrayList<>();
 
     public Ebook(String title, String description, Integer publishYear, Language language, Publisher publisher, Category category) {
         this.title = title;

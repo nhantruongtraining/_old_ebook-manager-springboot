@@ -11,7 +11,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserEbookRequest {
-    private UUID ebookId;
+    private Integer ebookId;
     private Integer userId;
     private boolean favorite;
     private UserEbookStatus ebookStatus;

@@ -20,7 +20,7 @@ import java.util.List;
 @RestController
 @RequestMapping(UserEbookResources.PATH)
 public class UserEbookResources {
-    public static final String PATH = "/api/UserEbooks";
+    public static final String PATH = "/api/userebooks";
 
     @Autowired
     UserEbookService userEbookService;
@@ -47,7 +47,7 @@ public class UserEbookResources {
         UserEbook createdUserEbook = userEbookService.save(new UserEbook(null,
                 LocalDateTime.now(), "path",
                 userEbook.isFavorite(),
-                UserEbookStatus.valueOf(userEbook.getEbookStatus()),
+                UserEbookStatus.valueOf(String.valueOf(userEbook.getEbookStatus())),
                 ebookService.findById(userEbook.getEbookId()).get(),
                 userService.findById(userEbook.getUserId()).get()));
 

@@ -23,7 +23,7 @@ public class Contributor {
     @JoinColumn
     private Author author;
 
-    @ManyToOne
+    @ManyToOne (fetch = FetchType.LAZY)
     @JoinColumn
     private Ebook ebook;
 

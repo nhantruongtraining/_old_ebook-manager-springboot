@@ -11,7 +11,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ContributorRequest {
-    private UUID ebookId;
+    private Integer ebookId;
     private Integer authorId;
     private ContributorType contributorType;
 }

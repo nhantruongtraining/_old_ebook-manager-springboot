@@ -26,12 +26,12 @@ public class EbookServiceImpl implements EbookService {
     }
 
     @Override
-    public Optional<Ebook> findById(UUID id) {
+    public Optional<Ebook> findById(Integer id) {
         return ebookRepository.findById(id);
     }
 
     @Override
-    public void deleteById(UUID id) {
+    public void deleteById(Integer id) {
         ebookRepository.deleteById(id);
     }
 }
