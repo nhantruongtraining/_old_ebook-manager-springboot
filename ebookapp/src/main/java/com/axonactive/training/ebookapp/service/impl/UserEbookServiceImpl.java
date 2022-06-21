@@ -4,6 +4,7 @@ import com.axonactive.training.ebookapp.entity.Ebook;
 import com.axonactive.training.ebookapp.entity.UserEbook;
 import com.axonactive.training.ebookapp.repository.UserEbookRepository;
 import com.axonactive.training.ebookapp.service.UserEbookService;
+import com.axonactive.training.ebookapp.service.dto.UserEbookDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,5 +35,10 @@ public class UserEbookServiceImpl implements UserEbookService {
     @Override
     public void deleteById(Integer id) {
         userEbookRepository.deleteById(id);
+    }
+
+    @Override
+    public List<UserEbookDto> returnAllFavorite() {
+        return userEbookRepository.returnAllFavorite();
     }
 }

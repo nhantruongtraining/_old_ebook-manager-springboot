@@ -42,6 +42,12 @@ public class UserEbookResources {
         return ResponseEntity.ok().body(UserEbookMapper.INSTANCE.toDto(userEbook));
     }
 
+    @GetMapping("/favorites")
+    public ResponseEntity<List<UserEbookDto>> getAllFavorites() throws ResourceNotFoundException{
+        List<UserEbookDto> favoriteList = userEbookService.returnAllFavorite();
+        return ResponseEntity.ok(favoriteList);
+    }
+
     @PostMapping
     public ResponseEntity<UserEbookDto> create(@RequestBody UserEbookRequest userEbook) throws ResourceNotFoundException {
         UserEbook createdUserEbook = userEbookService.save(new UserEbook(null,
