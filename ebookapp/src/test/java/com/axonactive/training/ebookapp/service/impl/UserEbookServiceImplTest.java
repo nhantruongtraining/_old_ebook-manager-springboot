@@ -19,12 +19,7 @@ class UserEbookServiceImplTest {
     UserEbookService userEbookService;
 
     @Test
-    void findByEbookTitle() {
+    void findByEbookTitleContaining() {
         assertEquals(1, userEbookService.findByEbookTitleContaining("Expectations").size());
-    }
-
-    @Test
-    void returnAllFavorite() {
-        assertEquals(1, userEbookService.returnAllFavorite().size());
     }
 }
