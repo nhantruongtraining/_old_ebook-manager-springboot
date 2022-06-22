@@ -13,6 +13,8 @@ public interface UserEbookMapper {
     UserEbookMapper INSTANCE = Mappers.getMapper(UserEbookMapper.class);
     @Mapping(source = "ebook.title", target = "ebookTitle")
     @Mapping(source = "user.username", target = "ebookOwner")
+    @Mapping(source = "favorite", target = "favorite")
+    @Mapping(source = "status", target = "userEbookStatus")
     UserEbookDto toDto(UserEbook userEbook);
     List<UserEbookDto> toDtos(List<UserEbook> userEbooks);
 }

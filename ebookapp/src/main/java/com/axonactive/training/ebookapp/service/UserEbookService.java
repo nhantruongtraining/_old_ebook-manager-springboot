@@ -1,6 +1,5 @@
 package com.axonactive.training.ebookapp.service;
 
-import com.axonactive.training.ebookapp.entity.Ebook;
 import com.axonactive.training.ebookapp.entity.UserEbook;
 import com.axonactive.training.ebookapp.service.dto.UserEbookDto;
 

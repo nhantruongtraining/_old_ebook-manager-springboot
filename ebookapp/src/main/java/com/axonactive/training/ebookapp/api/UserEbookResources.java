@@ -4,6 +4,7 @@ import com.axonactive.training.ebookapp.api.request.UserEbookRequest;
 import com.axonactive.training.ebookapp.entity.UserEbook;
 import com.axonactive.training.ebookapp.entity.UserEbookStatus;
 import com.axonactive.training.ebookapp.exception.ResourceNotFoundException;
+import com.axonactive.training.ebookapp.security.entity.User;
 import com.axonactive.training.ebookapp.security.service.UserService;
 import com.axonactive.training.ebookapp.service.EbookService;
 import com.axonactive.training.ebookapp.service.UserEbookService;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -49,16 +51,16 @@ public class UserEbookResources {
     }
 
     @PostMapping
-    public ResponseEntity<UserEbookDto> create(@RequestBody UserEbookRequest userEbook) throws ResourceNotFoundException {
-        UserEbook createdUserEbook = userEbookService.save(new UserEbook(null,
-                LocalDateTime.now(), "path",
-                userEbook.isFavorite(),
-                UserEbookStatus.valueOf(String.valueOf(userEbook.getEbookStatus())),
-                ebookService.findById(userEbook.getEbookId()).get(),
-                userService.findById(userEbook.getUserId()).get()));
+    public ResponseEntity<UserEbookDto> create(@RequestBody UserEbookRequest userEbookRequest) throws ResourceNotFoundException {
+        UserEbook  userEbook  = new UserEbook();
+        userEbook.setStatus(userEbookRequest.getEbookStatus());
+        userEbook.setFavorite(userEbookRequest.isFavorite());
+        userEbook.setEbook( ebookService.findById(userEbookRequest.getEbookId()).orElseThrow(EntityNotFoundException::new));
+        userEbook.setUser( userService.findById(userEbookRequest.getUserId()).get());
 
+        userEbook = userEbookService.save(userEbook);
 
-        return ResponseEntity.created(URI.create(PATH + "/" + createdUserEbook.getId())).body(UserEbookMapper.INSTANCE.toDto(createdUserEbook));
+        return ResponseEntity.created(URI.create(PATH + "/" + userEbook.getId())).body(UserEbookMapper.INSTANCE.toDto(userEbook));
     }
 
     @PutMapping("/{id}")
