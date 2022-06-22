@@ -75,6 +75,7 @@ public class UserEbookResources {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable(value = "id") Integer id) throws ResourceNotFoundException {
+
         userEbookService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
