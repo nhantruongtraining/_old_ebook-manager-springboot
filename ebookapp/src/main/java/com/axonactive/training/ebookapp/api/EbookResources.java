@@ -11,9 +11,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
+
 
 @RestController
 @RequestMapping(EbookResources.PATH)
@@ -37,7 +37,7 @@ public class EbookResources {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<EbookDto> getEbookById(@PathVariable UUID id) throws ResourceNotFoundException {
+    public ResponseEntity<EbookDto> getEbookById(@PathVariable Integer id) throws ResourceNotFoundException {
         Ebook ebook = ebookService.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id + " not found."));
         return ResponseEntity.ok().body(EbookMapper.INSTANCE.toDto(ebook));
@@ -49,15 +49,15 @@ public class EbookResources {
                 ebook.getTitle(),
                 ebook.getDescription(),
                 ebook.getPublishYear(),
-                languageService.findById(ebook.getLanguageId()).orElseThrow(() -> new ResourceNotFoundException("Language not found: " + ebook.getLanguageId())),
-                publisherService.findById(ebook.getPublisherId()).orElseThrow(() -> new ResourceNotFoundException("Publisher not found: " + ebook.getPublisherId())),
-                categoryService.findById(ebook.getCategoryId()).orElseThrow(() -> new ResourceNotFoundException("Category not found: " + ebook.getCategoryId()))));
+                languageService.findById(ebook.getLanguageId()).get(),
+                publisherService.findById(ebook.getPublisherId()).get(),
+                categoryService.findById(ebook.getCategoryId()).get()));
 
         return ResponseEntity.created(URI.create(PATH + "/" + createdEbook.getId())).body(EbookMapper.INSTANCE.toDto(createdEbook));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<EbookDto> update(@PathVariable(value = "id") UUID id, @RequestBody EbookRequest ebookUpdate) throws ResourceNotFoundException {
+    public ResponseEntity<EbookDto> update(@PathVariable(value = "id") Integer id, @RequestBody EbookRequest ebookUpdate) throws ResourceNotFoundException {
         Ebook ebook = ebookService.findById(id).orElseThrow(() -> new ResourceNotFoundException("ID not found: " + id));
         ebook.setTitle(ebookUpdate.getTitle());
         ebook.setDescription(ebookUpdate.getDescription());
@@ -70,7 +70,7 @@ public class EbookResources {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable(value = "id") UUID id) throws ResourceNotFoundException {
+    public ResponseEntity<Void> delete(@PathVariable(value = "id") Integer id) throws ResourceNotFoundException {
         ebookService.deleteById(id);
         return ResponseEntity.noContent().build();
     }

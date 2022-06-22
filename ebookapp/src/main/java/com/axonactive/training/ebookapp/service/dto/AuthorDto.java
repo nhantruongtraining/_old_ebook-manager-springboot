@@ -13,4 +13,5 @@ public class AuthorDto {
     private String firstName;
     private String lastName;
     private LocalDate dateOfBirth;
+    private String status;
 }

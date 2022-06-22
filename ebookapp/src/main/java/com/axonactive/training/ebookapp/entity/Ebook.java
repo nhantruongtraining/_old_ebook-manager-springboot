@@ -1,11 +1,13 @@
 package com.axonactive.training.ebookapp.entity;
 
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -14,20 +16,17 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Ebook {
     @Id
-    @Column(name = "id", columnDefinition = "uuid")
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
+    @Column
     private String title;
+    @Column
     private String description;
+    @Column
     private Integer publishYear;
 
-    private String coverImage;
-
-    private LocalDateTime uploadTimestamp;
-
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
     private Language language;
 
@@ -39,12 +38,14 @@ public class Ebook {
     @JoinColumn
     private Category category;
 
+//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "writtenBy")
+//    @JoinColumn
+//    private List<Contributor> contributors = new ArrayList<>();
+
     public Ebook(String title, String description, Integer publishYear, Language language, Publisher publisher, Category category) {
         this.title = title;
         this.description = description;
         this.publishYear = publishYear;
-        this.coverImage = "path";
-        this.uploadTimestamp = LocalDateTime.now();
         this.language = language;
         this.publisher = publisher;
         this.category = category;
