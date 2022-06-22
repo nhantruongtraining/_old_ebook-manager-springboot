@@ -44,10 +44,10 @@ public class UserEbookResources {
         return ResponseEntity.ok().body(UserEbookMapper.INSTANCE.toDto(userEbook));
     }
 
-    @GetMapping("/favorites")
-    public ResponseEntity<List<UserEbookDto>> getAllFavorites() throws ResourceNotFoundException{
-        List<UserEbookDto> favoriteList = userEbookService.returnAllFavorite();
-        return ResponseEntity.ok(favoriteList);
+    @GetMapping("/find")
+    public ResponseEntity<List<UserEbookDto>> getUserEbookByTitle(@RequestParam("title")String ebookTitle) {
+        List<UserEbook> resultList = userEbookService.findByEbookTitleContaining(ebookTitle);
+        return ResponseEntity.ok().body(UserEbookMapper.INSTANCE.toDtos(resultList));
     }
 
     @PostMapping
@@ -75,6 +75,7 @@ public class UserEbookResources {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable(value = "id") Integer id) throws ResourceNotFoundException {
+
         userEbookService.deleteById(id);
         return ResponseEntity.noContent().build();
     }

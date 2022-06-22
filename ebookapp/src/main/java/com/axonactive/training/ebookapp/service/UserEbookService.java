@@ -12,5 +12,6 @@ public interface UserEbookService {
     Optional<UserEbook> findById(Integer id);
     void deleteById(Integer id);
 
+    List<UserEbook> findByEbookTitleContaining(String ebookTitle);
     List<UserEbookDto> returnAllFavorite();
 }

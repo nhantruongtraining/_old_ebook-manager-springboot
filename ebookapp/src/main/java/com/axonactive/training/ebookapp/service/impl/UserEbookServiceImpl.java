@@ -1,6 +1,5 @@
 package com.axonactive.training.ebookapp.service.impl;
 
-import com.axonactive.training.ebookapp.entity.Ebook;
 import com.axonactive.training.ebookapp.entity.UserEbook;
 import com.axonactive.training.ebookapp.repository.UserEbookRepository;
 import com.axonactive.training.ebookapp.service.UserEbookService;
@@ -35,6 +34,11 @@ public class UserEbookServiceImpl implements UserEbookService {
     @Override
     public void deleteById(Integer id) {
         userEbookRepository.deleteById(id);
+    }
+
+    @Override
+    public List<UserEbook> findByEbookTitleContaining(String ebookTitle) {
+        return userEbookRepository.findByEbookTitleContaining(ebookTitle);
     }
 
     @Override

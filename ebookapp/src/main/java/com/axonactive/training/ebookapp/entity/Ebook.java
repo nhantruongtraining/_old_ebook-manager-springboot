@@ -31,11 +31,11 @@ public class Ebook {
     private Language language;
 
     @ManyToOne
-    @JoinColumn
+    @JoinColumn (name = "publisher_id")
     private Publisher publisher;
 
     @ManyToOne
-    @JoinColumn
+    @JoinColumn (name = "category_id")
     private Category category;
 
 //    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "writtenBy")
