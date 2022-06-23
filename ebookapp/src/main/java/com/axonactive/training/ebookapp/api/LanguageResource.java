@@ -14,8 +14,8 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping(LanguageResources.PATH)
-public class LanguageResources {
+@RequestMapping(LanguageResource.PATH)
+public class LanguageResource {
     public static final String PATH = "/api/languages";
 
     @Autowired

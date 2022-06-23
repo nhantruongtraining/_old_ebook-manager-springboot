@@ -14,8 +14,8 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping(PublisherResources.PATH)
-public class PublisherResources {
+@RequestMapping(PublisherResource.PATH)
+public class PublisherResource {
     public static final String PATH = "/api/publishers";
 
     @Autowired

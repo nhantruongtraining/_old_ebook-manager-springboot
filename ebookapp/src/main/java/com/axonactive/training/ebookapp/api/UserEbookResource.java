@@ -3,7 +3,6 @@ package com.axonactive.training.ebookapp.api;
 import com.axonactive.training.ebookapp.api.request.UserEbookRequest;
 import com.axonactive.training.ebookapp.entity.UserEbook;
 import com.axonactive.training.ebookapp.exception.ApiException;
-import com.axonactive.training.ebookapp.exception.ResourceNotFoundException;
 import com.axonactive.training.ebookapp.security.service.UserService;
 import com.axonactive.training.ebookapp.service.EbookService;
 import com.axonactive.training.ebookapp.service.UserEbookService;
@@ -20,8 +19,8 @@ import java.util.Optional;
 
 @Slf4j
 @RestController
-@RequestMapping(UserEbookResources.PATH)
-public class UserEbookResources {
+@RequestMapping(UserEbookResource.PATH)
+public class UserEbookResource {
     public static final String PATH = "/api/userebooks";
 
     @Autowired

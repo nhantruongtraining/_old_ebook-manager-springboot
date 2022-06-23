@@ -14,8 +14,8 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping(EbookResources.PATH)
-public class EbookResources {
+@RequestMapping(EbookResource.PATH)
+public class EbookResource {
 
     public static final String PATH = "/api/ebooks";
 

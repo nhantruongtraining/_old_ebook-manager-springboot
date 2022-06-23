@@ -2,7 +2,6 @@ package com.axonactive.training.ebookapp.api;
 
 import com.axonactive.training.ebookapp.api.request.ContributorRequest;
 import com.axonactive.training.ebookapp.entity.Contributor;
-import com.axonactive.training.ebookapp.entity.ContributorType;
 import com.axonactive.training.ebookapp.exception.ApiException;
 import com.axonactive.training.ebookapp.service.AuthorService;
 import com.axonactive.training.ebookapp.service.ContributorService;
@@ -17,8 +16,8 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping(ContributorResources.PATH)
-public class ContributorResources {
+@RequestMapping(ContributorResource.PATH)
+public class ContributorResource {
     public static final String PATH = "/api/contributors";
 
     @Autowired

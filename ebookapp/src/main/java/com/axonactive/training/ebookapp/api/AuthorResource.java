@@ -11,12 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping(AuthorResources.PATH)
-public class AuthorResources {
+@RequestMapping(AuthorResource.PATH)
+public class AuthorResource {
     public static final String PATH = "/api/authors";
 
     @Autowired
@@ -39,7 +40,7 @@ public class AuthorResources {
 
     //    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
-    public ResponseEntity<AuthorDto> create(@RequestBody AuthorRequest authorRequest) {
+    public ResponseEntity<AuthorDto> create(@RequestBody @Valid AuthorRequest authorRequest) {
         Author author = new Author();
         author.setFirstName(authorRequest.getFirstName());
         author.setLastName(authorRequest.getLastName());

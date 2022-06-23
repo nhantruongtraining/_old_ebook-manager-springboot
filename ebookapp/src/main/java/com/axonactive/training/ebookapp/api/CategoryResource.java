@@ -14,8 +14,8 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping(CategoryResources.PATH)
-public class CategoryResources {
+@RequestMapping(CategoryResource.PATH)
+public class CategoryResource {
     public static final String PATH = "/api/categories";
 
     @Autowired
