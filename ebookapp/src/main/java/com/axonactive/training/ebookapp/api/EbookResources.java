@@ -2,6 +2,7 @@ package com.axonactive.training.ebookapp.api;
 
 import com.axonactive.training.ebookapp.api.request.EbookRequest;
 import com.axonactive.training.ebookapp.entity.Ebook;
+import com.axonactive.training.ebookapp.exception.DemoException;
 import com.axonactive.training.ebookapp.service.*;
 import com.axonactive.training.ebookapp.service.dto.EbookDto;
 import com.axonactive.training.ebookapp.service.mapper.EbookMapper;
@@ -12,8 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
-import java.util.UUID;
-
 
 @RestController
 @RequestMapping(EbookResources.PATH)
@@ -37,9 +36,9 @@ public class EbookResources {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<EbookDto> getEbookById(@PathVariable Integer id) throws ResourceNotFoundException {
+    public ResponseEntity<EbookDto> getEbookById(@PathVariable Integer id) {
         Ebook ebook = ebookService.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(id + " not found."));
+                .orElseThrow(DemoException::EbookNotFound);
         return ResponseEntity.ok().body(EbookMapper.INSTANCE.toDto(ebook));
     }
 
@@ -57,8 +56,8 @@ public class EbookResources {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<EbookDto> update(@PathVariable(value = "id") Integer id, @RequestBody EbookRequest ebookUpdate) throws ResourceNotFoundException {
-        Ebook ebook = ebookService.findById(id).orElseThrow(() -> new ResourceNotFoundException("ID not found: " + id));
+    public ResponseEntity<EbookDto> update(@PathVariable(value = "id") Integer id, @RequestBody EbookRequest ebookUpdate) {
+        Ebook ebook = ebookService.findById(id).orElseThrow(DemoException::EbookNotFound);
         ebook.setTitle(ebookUpdate.getTitle());
         ebook.setDescription(ebookUpdate.getDescription());
         ebook.setPublishYear(ebookUpdate.getPublishYear());
@@ -70,7 +69,8 @@ public class EbookResources {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable(value = "id") Integer id) throws ResourceNotFoundException {
+    public ResponseEntity<Void> delete(@PathVariable(value = "id") Integer id) {
+        ebookService.findById(id).orElseThrow(DemoException::EbookNotFound);
         ebookService.deleteById(id);
         return ResponseEntity.noContent().build();
     }

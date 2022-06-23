@@ -10,6 +10,8 @@ public class DemoException {
     private static final String AUTHOR_NOT_FOUND_MSG = "Author Not Found";
     private static final String PUBLISHER_NOT_FOUND_MSG_KEY = "PublisherNotExisted";
     private static final String PUBLISHER_NOT_FOUND_MSG = "Publisher Not Found";
+    private static final String EBOOK_NOT_FOUND_MSG_KEY = "EbookNotExisted";
+    private static final String EBOOK_NOT_FOUND_MSG = "Ebook Not Found";
 
     public static ResponseException notFound(String messageKey, String message) {
         return new ResponseException(messageKey, message, HttpStatus.NOT_FOUND);
@@ -33,5 +35,9 @@ public class DemoException {
 
     public static ResponseException PublisherNotFound() {
         return notFound(PUBLISHER_NOT_FOUND_MSG_KEY, PUBLISHER_NOT_FOUND_MSG);
+    }
+
+    public static ResponseException EbookNotFound() {
+        return notFound(EBOOK_NOT_FOUND_MSG_KEY, EBOOK_NOT_FOUND_MSG);
     }
 }
