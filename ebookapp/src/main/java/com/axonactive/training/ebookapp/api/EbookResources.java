@@ -35,7 +35,7 @@ public class EbookResources {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<EbookDto> getEbookById(@PathVariable Integer id) {
+    public ResponseEntity<EbookDto> getEbookById(@PathVariable(value = "id") Integer id) {
         Ebook ebook = ebookService.findById(id)
                 .orElseThrow(ApiException::EbookNotFound);
         return ResponseEntity.ok().body(EbookMapper.INSTANCE.toDto(ebook));

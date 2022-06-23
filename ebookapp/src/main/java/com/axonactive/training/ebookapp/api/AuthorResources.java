@@ -31,7 +31,7 @@ public class AuthorResources {
 
 //    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping("/{id}")
-    public ResponseEntity<AuthorDto> getAuthorById(@PathVariable Integer id) throws ResourceNotFoundException {
+    public ResponseEntity<AuthorDto> getAuthorById(@PathVariable(value = "id") Integer id) throws ResourceNotFoundException {
         Author author = authorService.findById(id)
                 .orElseThrow(ApiException::AuthorNotFound);
         return ResponseEntity.ok().body(AuthorMapper.INSTANCE.toDto(author));
