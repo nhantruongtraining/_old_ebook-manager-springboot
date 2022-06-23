@@ -2,6 +2,7 @@ package com.axonactive.training.ebookapp.api;
 
 import com.axonactive.training.ebookapp.api.request.PublisherRequest;
 import com.axonactive.training.ebookapp.entity.Publisher;
+import com.axonactive.training.ebookapp.exception.DemoException;
 import com.axonactive.training.ebookapp.exception.ResourceNotFoundException;
 import com.axonactive.training.ebookapp.service.PublisherService;
 import com.axonactive.training.ebookapp.service.dto.PublisherDto;
@@ -29,9 +30,9 @@ public class PublisherResources {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PublisherDto> getPublisherById(@PathVariable Integer id) throws ResourceNotFoundException {
+    public ResponseEntity<PublisherDto> getPublisherById(@PathVariable Integer id) {
         Publisher publisher = publisherService.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(id + " not found."));
+                .orElseThrow(DemoException::PublisherNotFound);
         return ResponseEntity.ok().body(PublisherMapper.INSTANCE.toDto(publisher));
     }
 
@@ -47,8 +48,8 @@ public class PublisherResources {
 
     @PutMapping("/{id}")
     public ResponseEntity<PublisherDto> update(@PathVariable(value = "id") Integer id,
-                                            @RequestBody PublisherRequest publisherUpdate) throws ResourceNotFoundException {
-        Publisher publisher = publisherService.findById(id).orElseThrow(() -> new ResourceNotFoundException("ID not found: " + id));
+                                            @RequestBody PublisherRequest publisherUpdate) {
+        Publisher publisher = publisherService.findById(id).orElseThrow(DemoException::PublisherNotFound);
         publisher.setName(publisherUpdate.getName());
         publisher.setLocation(publisherUpdate.getLocation());
         publisher.setUrl(publisherUpdate.getUrl());
@@ -58,7 +59,8 @@ public class PublisherResources {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable(value = "id") Integer id) throws ResourceNotFoundException {
+    public ResponseEntity<Void> delete(@PathVariable(value = "id") Integer id) {
+        publisherService.findById(id).orElseThrow(DemoException::PublisherNotFound);
         publisherService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
