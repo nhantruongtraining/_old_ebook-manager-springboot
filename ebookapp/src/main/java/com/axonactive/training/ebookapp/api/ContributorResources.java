@@ -3,6 +3,7 @@ package com.axonactive.training.ebookapp.api;
 import com.axonactive.training.ebookapp.api.request.ContributorRequest;
 import com.axonactive.training.ebookapp.entity.Contributor;
 import com.axonactive.training.ebookapp.entity.ContributorType;
+import com.axonactive.training.ebookapp.exception.DemoException;
 import com.axonactive.training.ebookapp.service.AuthorService;
 import com.axonactive.training.ebookapp.service.ContributorService;
 import com.axonactive.training.ebookapp.service.EbookService;
@@ -35,9 +36,9 @@ public class ContributorResources {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ContributorDto> getContributorById(@PathVariable Integer id) throws ResourceNotFoundException {
+    public ResponseEntity<ContributorDto> getContributorById(@PathVariable Integer id) {
         Contributor contributor = contributorService.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(id + " not found."));
+                .orElseThrow(DemoException::ContributorNotFound);
         return ResponseEntity.ok().body(ContributorMapper.INSTANCE.toDto(contributor));
     }
 
@@ -53,8 +54,8 @@ public class ContributorResources {
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<ContributorDto> update(@PathVariable(value = "id") Integer id, @RequestBody ContributorRequest contributorUpdate) throws ResourceNotFoundException {
-        Contributor contributor = contributorService.findById(id).orElseThrow(() -> new ResourceNotFoundException("ID not found: " + id));
+    public ResponseEntity<ContributorDto> update(@PathVariable(value = "id") Integer id, @RequestBody ContributorRequest contributorUpdate) {
+        Contributor contributor = contributorService.findById(id).orElseThrow(DemoException::ContributorNotFound);
         contributor.setAuthor(authorService.findById(contributorUpdate.getAuthorId()).get());
         contributor.setEbook(ebookService.findById(contributorUpdate.getEbookId()).get());
         Contributor editedContributor = contributorService.save(contributor);
@@ -62,7 +63,8 @@ public class ContributorResources {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable(value = "id") Integer id) throws ResourceNotFoundException {
+    public ResponseEntity<Void> delete(@PathVariable(value = "id") Integer id) {
+        contributorService.findById(id).orElseThrow(DemoException::ContributorNotFound);
         contributorService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
