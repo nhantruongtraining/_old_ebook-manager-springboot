@@ -2,10 +2,8 @@ package com.axonactive.training.ebookapp.api;
 
 import com.axonactive.training.ebookapp.api.request.UserEbookRequest;
 import com.axonactive.training.ebookapp.entity.UserEbook;
-import com.axonactive.training.ebookapp.entity.UserEbookStatus;
-import com.axonactive.training.ebookapp.exception.DemoException;
+import com.axonactive.training.ebookapp.exception.ApiException;
 import com.axonactive.training.ebookapp.exception.ResourceNotFoundException;
-import com.axonactive.training.ebookapp.security.entity.User;
 import com.axonactive.training.ebookapp.security.service.UserService;
 import com.axonactive.training.ebookapp.service.EbookService;
 import com.axonactive.training.ebookapp.service.UserEbookService;
@@ -16,9 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.EntityNotFoundException;
 import java.net.URI;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,7 +41,7 @@ public class UserEbookResources {
     public ResponseEntity<UserEbookDto> getUserEbookById(@PathVariable Integer id) {
         Optional<UserEbook> userEbook = userEbookService.findById(id);
         if (!userEbook.isPresent())
-            throw DemoException.notFound("UserEbookNotExisted","UserEbook Not Found");
+            throw ApiException.notFound("UserEbookNotExisted","UserEbook Not Found");
         return ResponseEntity.ok().body(UserEbookMapper.INSTANCE.toDto(userEbook.get()));
     }
 
@@ -59,7 +55,7 @@ public class UserEbookResources {
     public ResponseEntity<List<UserEbookDto>> getUserEbookByTitle(@RequestParam("title") String ebookTitle) {
         log.info("find UserEbook by title {} ", ebookTitle);
         if (ebookTitle == null || ebookTitle.isEmpty())
-            throw DemoException.badRequest("TitleEmpty", "Title is null or empty");
+            throw ApiException.badRequest("TitleEmpty", "Title is null or empty");
         List<UserEbook> resultList = userEbookService.findByEbookTitleContaining(ebookTitle);
         return ResponseEntity.ok().body(UserEbookMapper.INSTANCE.toDtos(resultList));
     }
@@ -69,7 +65,7 @@ public class UserEbookResources {
         UserEbook userEbook = new UserEbook();
         userEbook.setStatus(userEbookRequest.getEbookStatus());
         userEbook.setFavorite(userEbookRequest.isFavorite());
-        userEbook.setEbook(ebookService.findById(userEbookRequest.getEbookId()).orElseThrow(DemoException::UserEbookNotFound));
+        userEbook.setEbook(ebookService.findById(userEbookRequest.getEbookId()).orElseThrow(ApiException::UserEbookNotFound));
         userEbook.setUser(userService.findById(userEbookRequest.getUserId()).get());
 
         userEbook = userEbookService.save(userEbook);
@@ -80,7 +76,7 @@ public class UserEbookResources {
     @PutMapping("/{id}")
     public ResponseEntity<UserEbookDto> update(@PathVariable(value = "id") Integer id,
                                                @RequestBody UserEbookRequest userEbookUpdate) {
-        UserEbook userEbook = userEbookService.findById(id).orElseThrow(DemoException::UserEbookNotFound);
+        UserEbook userEbook = userEbookService.findById(id).orElseThrow(ApiException::UserEbookNotFound);
         userEbook.setFavorite(userEbookUpdate.isFavorite());
         userEbook.setCoverImage("path");
         UserEbook editedUserEbook = userEbookService.save(userEbook);
@@ -89,7 +85,7 @@ public class UserEbookResources {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable(value = "id") Integer id) {
-        userEbookService.findById(id).orElseThrow(DemoException::UserEbookNotFound);
+        userEbookService.findById(id).orElseThrow(ApiException::UserEbookNotFound);
         userEbookService.deleteById(id);
         return ResponseEntity.noContent().build();
     }

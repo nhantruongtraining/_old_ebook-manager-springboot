@@ -2,6 +2,7 @@ package com.axonactive.training.ebookapp.api;
 
 import com.axonactive.training.ebookapp.api.request.LanguageRequest;
 import com.axonactive.training.ebookapp.entity.Language;
+import com.axonactive.training.ebookapp.exception.ApiException;
 import com.axonactive.training.ebookapp.exception.ResourceNotFoundException;
 import com.axonactive.training.ebookapp.service.LanguageService;
 import com.axonactive.training.ebookapp.service.dto.LanguageDto;
@@ -28,9 +29,9 @@ public class LanguageResources {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<LanguageDto> getLanguageById(@PathVariable Integer id) throws ResourceNotFoundException {
+    public ResponseEntity<LanguageDto> getLanguageById(@PathVariable(value = "id") Integer id) {
         Language language = languageService.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(id + " not found"));
+                .orElseThrow(ApiException::LanguageNotFound);
         return ResponseEntity.ok().body(LanguageMapper.INSTANCE.toDto(language));
     }
 
@@ -44,8 +45,8 @@ public class LanguageResources {
 
     @PutMapping("/{id}")
     public ResponseEntity<LanguageDto> update(@PathVariable(value = "id") Integer id,
-                                              @RequestBody LanguageRequest languageUpdate) throws ResourceNotFoundException {
-        Language language = languageService.findById(id).orElseThrow(() -> new ResourceNotFoundException("ID not found: " + id));
+                                              @RequestBody LanguageRequest languageUpdate) {
+        Language language = languageService.findById(id).orElseThrow(ApiException::LanguageNotFound);
         language.setName(languageUpdate.getName());
         language.setCode(languageUpdate.getCode());
         Language editedLanguage = languageService.save(language);
@@ -53,7 +54,8 @@ public class LanguageResources {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable(value = "id") Integer id) throws ResourceNotFoundException {
+    public ResponseEntity<Void> delete(@PathVariable(value = "id") Integer id) {
+        languageService.findById(id).orElseThrow(ApiException::LanguageNotFound);
         languageService.deleteById(id);
         return ResponseEntity.noContent().build();
     }

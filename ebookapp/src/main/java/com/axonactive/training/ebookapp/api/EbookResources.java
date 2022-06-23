@@ -2,12 +2,11 @@ package com.axonactive.training.ebookapp.api;
 
 import com.axonactive.training.ebookapp.api.request.EbookRequest;
 import com.axonactive.training.ebookapp.entity.Ebook;
-import com.axonactive.training.ebookapp.exception.DemoException;
+import com.axonactive.training.ebookapp.exception.ApiException;
 import com.axonactive.training.ebookapp.service.*;
 import com.axonactive.training.ebookapp.service.dto.EbookDto;
 import com.axonactive.training.ebookapp.service.mapper.EbookMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,7 +37,7 @@ public class EbookResources {
     @GetMapping("/{id}")
     public ResponseEntity<EbookDto> getEbookById(@PathVariable Integer id) {
         Ebook ebook = ebookService.findById(id)
-                .orElseThrow(DemoException::EbookNotFound);
+                .orElseThrow(ApiException::EbookNotFound);
         return ResponseEntity.ok().body(EbookMapper.INSTANCE.toDto(ebook));
     }
 
@@ -57,7 +56,7 @@ public class EbookResources {
 
     @PutMapping("/{id}")
     public ResponseEntity<EbookDto> update(@PathVariable(value = "id") Integer id, @RequestBody EbookRequest ebookUpdate) {
-        Ebook ebook = ebookService.findById(id).orElseThrow(DemoException::EbookNotFound);
+        Ebook ebook = ebookService.findById(id).orElseThrow(ApiException::EbookNotFound);
         ebook.setTitle(ebookUpdate.getTitle());
         ebook.setDescription(ebookUpdate.getDescription());
         ebook.setPublishYear(ebookUpdate.getPublishYear());
@@ -70,7 +69,7 @@ public class EbookResources {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable(value = "id") Integer id) {
-        ebookService.findById(id).orElseThrow(DemoException::EbookNotFound);
+        ebookService.findById(id).orElseThrow(ApiException::EbookNotFound);
         ebookService.deleteById(id);
         return ResponseEntity.noContent().build();
     }

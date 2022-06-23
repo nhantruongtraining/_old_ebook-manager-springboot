@@ -1,7 +1,6 @@
 package com.axonactive.training.ebookapp.service.impl;
 
 import com.axonactive.training.ebookapp.entity.UserEbook;
-import com.axonactive.training.ebookapp.exception.DemoException;
 import com.axonactive.training.ebookapp.repository.UserEbookRepository;
 import com.axonactive.training.ebookapp.service.UserEbookService;
 import com.axonactive.training.ebookapp.service.dto.UserEbookDto;
@@ -10,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 

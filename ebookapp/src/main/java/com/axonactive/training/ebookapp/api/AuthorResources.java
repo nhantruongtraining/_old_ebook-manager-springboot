@@ -2,15 +2,13 @@ package com.axonactive.training.ebookapp.api;
 
 import com.axonactive.training.ebookapp.api.request.AuthorRequest;
 import com.axonactive.training.ebookapp.entity.Author;
-import com.axonactive.training.ebookapp.entity.AuthorStatus;
-import com.axonactive.training.ebookapp.exception.DemoException;
+import com.axonactive.training.ebookapp.exception.ApiException;
 import com.axonactive.training.ebookapp.exception.ResourceNotFoundException;
 import com.axonactive.training.ebookapp.service.AuthorService;
 import com.axonactive.training.ebookapp.service.dto.AuthorDto;
 import com.axonactive.training.ebookapp.service.mapper.AuthorMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -35,7 +33,7 @@ public class AuthorResources {
     @GetMapping("/{id}")
     public ResponseEntity<AuthorDto> getAuthorById(@PathVariable Integer id) throws ResourceNotFoundException {
         Author author = authorService.findById(id)
-                .orElseThrow(DemoException::AuthorNotFound);
+                .orElseThrow(ApiException::AuthorNotFound);
         return ResponseEntity.ok().body(AuthorMapper.INSTANCE.toDto(author));
     }
 
@@ -53,7 +51,7 @@ public class AuthorResources {
     @PutMapping("/{id}")
     public ResponseEntity<AuthorDto> update(@PathVariable(value = "id") Integer id,
                                             @RequestBody AuthorRequest authorUpdate) throws ResourceNotFoundException {
-        Author author = authorService.findById(id).orElseThrow(DemoException::AuthorNotFound);
+        Author author = authorService.findById(id).orElseThrow(ApiException::AuthorNotFound);
         author.setFirstName(authorUpdate.getFirstName());
         author.setLastName(authorUpdate.getLastName());
         author.setDateOfBirth(authorUpdate.getDateOfBirth());
@@ -65,7 +63,7 @@ public class AuthorResources {
 //    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable(value = "id") Integer id) throws ResourceNotFoundException {
-        authorService.findById(id).orElseThrow(DemoException::AuthorNotFound);
+        authorService.findById(id).orElseThrow(ApiException::AuthorNotFound);
         authorService.deleteById(id);
         return ResponseEntity.noContent().build();
     }

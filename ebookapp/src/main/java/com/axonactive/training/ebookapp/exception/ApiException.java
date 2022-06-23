@@ -3,7 +3,7 @@ package com.axonactive.training.ebookapp.exception;
 
 import org.springframework.http.HttpStatus;
 
-public class DemoException {
+public class ApiException {
     private static final String USEREBOOK_NOT_FOUND_MSG_KEY = "UserEbookNotExisted";
     private static final String USEREBOOK_NOT_FOUND_MSG = "UserEbook Not Found";
     private static final String AUTHOR_NOT_FOUND_MSG_KEY = "AuthorNotExisted";
@@ -14,6 +14,8 @@ public class DemoException {
     private static final String EBOOK_NOT_FOUND_MSG = "Ebook Not Found";
     private static final String CONTRIBUTOR_NOT_FOUND_MSG_KEY = "ContributorNotExisted";
     private static final String CONTRIBUTOR_NOT_FOUND_MSG = "Contributor Not Found";
+    private static final String LANGUAGE_NOT_FOUND_MSG_KEY = "LanguageNotExisted";
+    private static final String LANGUAGE_NOT_FOUND_MSG = "Language Not Found";
 
     public static ResponseException notFound(String messageKey, String message) {
         return new ResponseException(messageKey, message, HttpStatus.NOT_FOUND);
@@ -45,5 +47,9 @@ public class DemoException {
 
     public static ResponseException ContributorNotFound() {
         return notFound(CONTRIBUTOR_NOT_FOUND_MSG_KEY, CONTRIBUTOR_NOT_FOUND_MSG);
+    }
+
+    public static ResponseException LanguageNotFound() {
+        return notFound(LANGUAGE_NOT_FOUND_MSG_KEY, LANGUAGE_NOT_FOUND_MSG);
     }
 }

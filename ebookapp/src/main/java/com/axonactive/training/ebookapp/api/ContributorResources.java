@@ -3,14 +3,13 @@ package com.axonactive.training.ebookapp.api;
 import com.axonactive.training.ebookapp.api.request.ContributorRequest;
 import com.axonactive.training.ebookapp.entity.Contributor;
 import com.axonactive.training.ebookapp.entity.ContributorType;
-import com.axonactive.training.ebookapp.exception.DemoException;
+import com.axonactive.training.ebookapp.exception.ApiException;
 import com.axonactive.training.ebookapp.service.AuthorService;
 import com.axonactive.training.ebookapp.service.ContributorService;
 import com.axonactive.training.ebookapp.service.EbookService;
 import com.axonactive.training.ebookapp.service.dto.ContributorDto;
 import com.axonactive.training.ebookapp.service.mapper.ContributorMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,9 +35,9 @@ public class ContributorResources {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ContributorDto> getContributorById(@PathVariable Integer id) {
+    public ResponseEntity<ContributorDto> getContributorById(@PathVariable(value = "id") Integer id) {
         Contributor contributor = contributorService.findById(id)
-                .orElseThrow(DemoException::ContributorNotFound);
+                .orElseThrow(ApiException::ContributorNotFound);
         return ResponseEntity.ok().body(ContributorMapper.INSTANCE.toDto(contributor));
     }
 
@@ -52,10 +51,9 @@ public class ContributorResources {
         return ResponseEntity.created(URI.create(PATH + "/" + createdContributor.getId())).body(ContributorMapper.INSTANCE.toDto(createdContributor));
     }
 
-
     @PutMapping("/{id}")
     public ResponseEntity<ContributorDto> update(@PathVariable(value = "id") Integer id, @RequestBody ContributorRequest contributorUpdate) {
-        Contributor contributor = contributorService.findById(id).orElseThrow(DemoException::ContributorNotFound);
+        Contributor contributor = contributorService.findById(id).orElseThrow(ApiException::ContributorNotFound);
         contributor.setAuthor(authorService.findById(contributorUpdate.getAuthorId()).get());
         contributor.setEbook(ebookService.findById(contributorUpdate.getEbookId()).get());
         Contributor editedContributor = contributorService.save(contributor);
@@ -64,7 +62,7 @@ public class ContributorResources {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable(value = "id") Integer id) {
-        contributorService.findById(id).orElseThrow(DemoException::ContributorNotFound);
+        contributorService.findById(id).orElseThrow(ApiException::ContributorNotFound);
         contributorService.deleteById(id);
         return ResponseEntity.noContent().build();
     }

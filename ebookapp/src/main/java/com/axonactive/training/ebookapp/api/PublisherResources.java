@@ -2,14 +2,12 @@ package com.axonactive.training.ebookapp.api;
 
 import com.axonactive.training.ebookapp.api.request.PublisherRequest;
 import com.axonactive.training.ebookapp.entity.Publisher;
-import com.axonactive.training.ebookapp.exception.DemoException;
-import com.axonactive.training.ebookapp.exception.ResourceNotFoundException;
+import com.axonactive.training.ebookapp.exception.ApiException;
 import com.axonactive.training.ebookapp.service.PublisherService;
 import com.axonactive.training.ebookapp.service.dto.PublisherDto;
 import com.axonactive.training.ebookapp.service.mapper.PublisherMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -32,7 +30,7 @@ public class PublisherResources {
     @GetMapping("/{id}")
     public ResponseEntity<PublisherDto> getPublisherById(@PathVariable Integer id) {
         Publisher publisher = publisherService.findById(id)
-                .orElseThrow(DemoException::PublisherNotFound);
+                .orElseThrow(ApiException::PublisherNotFound);
         return ResponseEntity.ok().body(PublisherMapper.INSTANCE.toDto(publisher));
     }
 
@@ -49,7 +47,7 @@ public class PublisherResources {
     @PutMapping("/{id}")
     public ResponseEntity<PublisherDto> update(@PathVariable(value = "id") Integer id,
                                             @RequestBody PublisherRequest publisherUpdate) {
-        Publisher publisher = publisherService.findById(id).orElseThrow(DemoException::PublisherNotFound);
+        Publisher publisher = publisherService.findById(id).orElseThrow(ApiException::PublisherNotFound);
         publisher.setName(publisherUpdate.getName());
         publisher.setLocation(publisherUpdate.getLocation());
         publisher.setUrl(publisherUpdate.getUrl());
@@ -60,7 +58,7 @@ public class PublisherResources {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable(value = "id") Integer id) {
-        publisherService.findById(id).orElseThrow(DemoException::PublisherNotFound);
+        publisherService.findById(id).orElseThrow(ApiException::PublisherNotFound);
         publisherService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
