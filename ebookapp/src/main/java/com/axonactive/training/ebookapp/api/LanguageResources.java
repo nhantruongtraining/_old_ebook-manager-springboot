@@ -3,7 +3,6 @@ package com.axonactive.training.ebookapp.api;
 import com.axonactive.training.ebookapp.api.request.LanguageRequest;
 import com.axonactive.training.ebookapp.entity.Language;
 import com.axonactive.training.ebookapp.exception.ApiException;
-import com.axonactive.training.ebookapp.exception.ResourceNotFoundException;
 import com.axonactive.training.ebookapp.service.LanguageService;
 import com.axonactive.training.ebookapp.service.dto.LanguageDto;
 import com.axonactive.training.ebookapp.service.mapper.LanguageMapper;
@@ -36,9 +35,13 @@ public class LanguageResources {
     }
 
     @PostMapping
-    public ResponseEntity<LanguageDto> create(@RequestBody LanguageRequest language) {
-        Language createdLanguage = languageService.save(new Language(
-                null, language.getName(), language.getCode()));
+    public ResponseEntity<LanguageDto> create(@RequestBody LanguageRequest languageRequest) {
+        Language language = new Language();
+        language.setName(languageRequest.getName());
+        language.setCode(languageRequest.getCode());
+
+        Language createdLanguage = languageService.save(language);
+
         return ResponseEntity.created(URI.create(PATH + "/" + createdLanguage.getId()))
                 .body(LanguageMapper.INSTANCE.toDto(createdLanguage));
     }

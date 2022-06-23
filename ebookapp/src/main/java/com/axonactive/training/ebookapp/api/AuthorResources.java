@@ -22,14 +22,14 @@ public class AuthorResources {
     @Autowired
     AuthorService authorService;
 
-//    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    //    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping
     public ResponseEntity<List<AuthorDto>> getAll() {
         List<Author> authorList = authorService.getAll();
         return ResponseEntity.ok(AuthorMapper.INSTANCE.toDtos(authorList));
     }
 
-//    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    //    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping("/{id}")
     public ResponseEntity<AuthorDto> getAuthorById(@PathVariable(value = "id") Integer id) throws ResourceNotFoundException {
         Author author = authorService.findById(id)
@@ -37,17 +37,21 @@ public class AuthorResources {
         return ResponseEntity.ok().body(AuthorMapper.INSTANCE.toDto(author));
     }
 
-//    @PreAuthorize("hasRole('ADMIN')")
+    //    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
-    public ResponseEntity<AuthorDto> create(@RequestBody AuthorRequest author) {
-        Author createdAuthor = authorService.save(new Author(
-                null, author.getFirstName(), author.getLastName(),
-                author.getDateOfBirth(), author.getStatus()));
+    public ResponseEntity<AuthorDto> create(@RequestBody AuthorRequest authorRequest) {
+        Author author = new Author();
+        author.setFirstName(authorRequest.getFirstName());
+        author.setLastName(authorRequest.getLastName());
+        author.setDateOfBirth(authorRequest.getDateOfBirth());
+        author.setStatus(authorRequest.getStatus());
+
+        Author createdAuthor = authorService.save(author);
 
         return ResponseEntity.created(URI.create(PATH + "/" + createdAuthor.getId())).body(AuthorMapper.INSTANCE.toDto(createdAuthor));
     }
 
-//    @PreAuthorize("hasRole('ADMIN')")
+    //    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<AuthorDto> update(@PathVariable(value = "id") Integer id,
                                             @RequestBody AuthorRequest authorUpdate) throws ResourceNotFoundException {
@@ -60,7 +64,7 @@ public class AuthorResources {
         return ResponseEntity.ok(AuthorMapper.INSTANCE.toDto(editedAuthor));
     }
 
-//    @PreAuthorize("hasRole('ADMIN')")
+    //    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable(value = "id") Integer id) throws ResourceNotFoundException {
         authorService.findById(id).orElseThrow(ApiException::AuthorNotFound);

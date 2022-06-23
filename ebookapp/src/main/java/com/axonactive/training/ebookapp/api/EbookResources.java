@@ -42,14 +42,14 @@ public class EbookResources {
     }
 
     @PostMapping
-    public ResponseEntity<EbookDto> create(@RequestBody EbookRequest ebook) {
+    public ResponseEntity<EbookDto> create(@RequestBody EbookRequest ebookRequest) {
         Ebook createdEbook = ebookService.save(new Ebook(
-                ebook.getTitle(),
-                ebook.getDescription(),
-                ebook.getPublishYear(),
-                languageService.findById(ebook.getLanguageId()).get(),
-                publisherService.findById(ebook.getPublisherId()).get(),
-                categoryService.findById(ebook.getCategoryId()).get()));
+                ebookRequest.getTitle(),
+                ebookRequest.getDescription(),
+                ebookRequest.getPublishYear(),
+                languageService.findById(ebookRequest.getLanguageId()).get(),
+                publisherService.findById(ebookRequest.getPublisherId()).get(),
+                categoryService.findById(ebookRequest.getCategoryId()).get()));
 
         return ResponseEntity.created(URI.create(PATH + "/" + createdEbook.getId())).body(EbookMapper.INSTANCE.toDto(createdEbook));
     }

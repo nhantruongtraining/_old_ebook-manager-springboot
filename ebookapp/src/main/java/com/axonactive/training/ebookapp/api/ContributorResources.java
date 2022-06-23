@@ -42,11 +42,13 @@ public class ContributorResources {
     }
 
     @PostMapping
-    public ResponseEntity<ContributorDto> create(@RequestBody ContributorRequest contributor) {
-        Contributor createdContributor = contributorService.save(new Contributor(null,
-        ContributorType.valueOf(String.valueOf(contributor.getContributorType())),
-        authorService.findById(contributor.getAuthorId()).get(),
-        ebookService.findById(contributor.getEbookId()).get()));
+    public ResponseEntity<ContributorDto> create(@RequestBody ContributorRequest contributorRequest) {
+        Contributor contributor = new Contributor();
+        contributor.setEbook(ebookService.findById(contributorRequest.getEbookId()).get());
+        contributor.setAuthor(authorService.findById(contributorRequest.getAuthorId()).get());
+        contributor.setType(contributorRequest.getContributorType());
+
+        Contributor createdContributor = contributorService.save(contributor);
 
         return ResponseEntity.created(URI.create(PATH + "/" + createdContributor.getId())).body(ContributorMapper.INSTANCE.toDto(createdContributor));
     }
