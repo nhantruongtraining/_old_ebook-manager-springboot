@@ -13,5 +13,5 @@ public class PublisherRequest {
     private String name;
     private String location;
     private String url;
-    private Integer status;
+    private String status;
 }

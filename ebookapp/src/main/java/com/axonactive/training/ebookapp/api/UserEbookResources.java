@@ -38,7 +38,7 @@ public class UserEbookResources {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserEbookDto> getUserEbookById(@PathVariable Integer id) {
+    public ResponseEntity<UserEbookDto> getUserEbookById(@PathVariable(value = "id") Integer id) {
         Optional<UserEbook> userEbook = userEbookService.findById(id);
         if (!userEbook.isPresent())
             throw ApiException.notFound("UserEbookNotExisted","UserEbook Not Found");
@@ -49,7 +49,7 @@ public class UserEbookResources {
      * This function returns a result list of UserEbooks when User does a search by title
      *
      * @param ebookTitle
-     * @return a list of UserEbooks which contain the string from param
+     * @return a list of UserEbooks which title contain the string from param
      */
     @GetMapping("/find")
     public ResponseEntity<List<UserEbookDto>> getUserEbookByTitle(@RequestParam("title") String ebookTitle) {
@@ -61,7 +61,7 @@ public class UserEbookResources {
     }
 
     @PostMapping
-    public ResponseEntity<UserEbookDto> create(@RequestBody UserEbookRequest userEbookRequest) throws ResourceNotFoundException {
+    public ResponseEntity<UserEbookDto> create(@RequestBody UserEbookRequest userEbookRequest) {
         UserEbook userEbook = new UserEbook();
         userEbook.setStatus(userEbookRequest.getEbookStatus());
         userEbook.setFavorite(userEbookRequest.isFavorite());
@@ -78,7 +78,6 @@ public class UserEbookResources {
                                                @RequestBody UserEbookRequest userEbookUpdate) {
         UserEbook userEbook = userEbookService.findById(id).orElseThrow(ApiException::UserEbookNotFound);
         userEbook.setFavorite(userEbookUpdate.isFavorite());
-        userEbook.setCoverImage("path");
         UserEbook editedUserEbook = userEbookService.save(userEbook);
         return ResponseEntity.ok(UserEbookMapper.INSTANCE.toDto(editedUserEbook));
     }

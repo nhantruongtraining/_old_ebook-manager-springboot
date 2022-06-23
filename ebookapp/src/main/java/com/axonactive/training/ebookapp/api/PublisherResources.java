@@ -35,10 +35,14 @@ public class PublisherResources {
     }
 
     @PostMapping
-    public ResponseEntity<PublisherDto> create(@RequestBody PublisherRequest publisher) {
-        Publisher createdPublisher = publisherService.save(new Publisher(
-                null, publisher.getName(), publisher.getLocation(),
-                publisher.getUrl(), publisher.getStatus()));
+    public ResponseEntity<PublisherDto> create(@RequestBody PublisherRequest publisherRequest) {
+        Publisher createdPublisher = new Publisher();
+                createdPublisher.setName(publisherRequest.getName());
+                createdPublisher.setLocation(publisherRequest.getLocation());
+                createdPublisher.setUrl(publisherRequest.getUrl());
+                createdPublisher.setStatus(publisherRequest.getStatus());
+
+                createdPublisher = publisherService.save(createdPublisher);
 
         return ResponseEntity.created(URI.create(PATH + "/" + createdPublisher.getId()))
                 .body(PublisherMapper.INSTANCE.toDto(createdPublisher));

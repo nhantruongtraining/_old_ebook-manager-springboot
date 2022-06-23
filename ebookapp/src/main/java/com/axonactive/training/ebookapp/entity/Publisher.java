@@ -22,5 +22,5 @@ public class Publisher {
     private String name;
     private String location;
     private String url;
-    private Integer status;
+    private String status;
 }

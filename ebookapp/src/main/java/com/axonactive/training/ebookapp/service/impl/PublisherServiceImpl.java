@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class PublisherImpl implements PublisherService {
+public class PublisherServiceImpl implements PublisherService {
     @Autowired
     PublisherRepository publisherRepository;
 
