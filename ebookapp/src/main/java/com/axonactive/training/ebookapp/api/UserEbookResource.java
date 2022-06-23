@@ -59,6 +59,11 @@ public class UserEbookResource {
         return ResponseEntity.ok().body(UserEbookMapper.INSTANCE.toDtos(resultList));
     }
 
+    @GetMapping("/{userId}/favorites")
+    public ResponseEntity<List<UserEbookDto>> returnAllFavorite(@PathVariable(value = "userId") Integer userId) {
+        return ResponseEntity.ok(userEbookService.returnAllFavorite(userId));
+    }
+
     @PostMapping
     public ResponseEntity<UserEbookDto> create(@RequestBody UserEbookRequest userEbookRequest) {
         UserEbook userEbook = new UserEbook();

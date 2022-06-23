@@ -47,7 +47,9 @@ public class UserEbookServiceImpl implements UserEbookService {
     }
 
     @Override
-    public List<UserEbookDto> returnAllFavorite() {
-        return userEbookRepository.returnAllFavorite();
+    public List<UserEbookDto> returnAllFavorite(Integer userId) {
+        return userEbookRepository.returnAllFavorite(userId);
     }
+
+
 }
