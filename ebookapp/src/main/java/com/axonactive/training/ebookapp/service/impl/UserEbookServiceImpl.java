@@ -1,16 +1,22 @@
 package com.axonactive.training.ebookapp.service.impl;
 
 import com.axonactive.training.ebookapp.entity.UserEbook;
+import com.axonactive.training.ebookapp.exception.DemoException;
 import com.axonactive.training.ebookapp.repository.UserEbookRepository;
 import com.axonactive.training.ebookapp.service.UserEbookService;
 import com.axonactive.training.ebookapp.service.dto.UserEbookDto;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
+@Slf4j
 public class UserEbookServiceImpl implements UserEbookService {
     @Autowired
     UserEbookRepository userEbookRepository;
@@ -28,6 +34,7 @@ public class UserEbookServiceImpl implements UserEbookService {
 
     @Override
     public Optional<UserEbook> findById(Integer id) {
+//        userEbookRepository.findById(id).orElseThrow(DemoException::UserEbookNotFound);
         return userEbookRepository.findById(id);
     }
 

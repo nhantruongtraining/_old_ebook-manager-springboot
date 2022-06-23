@@ -3,6 +3,7 @@ package com.axonactive.training.ebookapp.api;
 import com.axonactive.training.ebookapp.api.request.AuthorRequest;
 import com.axonactive.training.ebookapp.entity.Author;
 import com.axonactive.training.ebookapp.entity.AuthorStatus;
+import com.axonactive.training.ebookapp.exception.DemoException;
 import com.axonactive.training.ebookapp.exception.ResourceNotFoundException;
 import com.axonactive.training.ebookapp.service.AuthorService;
 import com.axonactive.training.ebookapp.service.dto.AuthorDto;
@@ -34,7 +35,7 @@ public class AuthorResources {
     @GetMapping("/{id}")
     public ResponseEntity<AuthorDto> getAuthorById(@PathVariable Integer id) throws ResourceNotFoundException {
         Author author = authorService.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(id + " not found."));
+                .orElseThrow(DemoException::AuthorNotFound);
         return ResponseEntity.ok().body(AuthorMapper.INSTANCE.toDto(author));
     }
 
@@ -52,7 +53,7 @@ public class AuthorResources {
     @PutMapping("/{id}")
     public ResponseEntity<AuthorDto> update(@PathVariable(value = "id") Integer id,
                                             @RequestBody AuthorRequest authorUpdate) throws ResourceNotFoundException {
-        Author author = authorService.findById(id).orElseThrow(() -> new ResourceNotFoundException("ID not found: " + id));
+        Author author = authorService.findById(id).orElseThrow(DemoException::AuthorNotFound);
         author.setFirstName(authorUpdate.getFirstName());
         author.setLastName(authorUpdate.getLastName());
         author.setDateOfBirth(authorUpdate.getDateOfBirth());
@@ -64,6 +65,7 @@ public class AuthorResources {
 //    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable(value = "id") Integer id) throws ResourceNotFoundException {
+        authorService.findById(id).orElseThrow(DemoException::AuthorNotFound);
         authorService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
