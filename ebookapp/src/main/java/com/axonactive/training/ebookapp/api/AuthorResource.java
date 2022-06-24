@@ -3,7 +3,6 @@ package com.axonactive.training.ebookapp.api;
 import com.axonactive.training.ebookapp.api.request.AuthorRequest;
 import com.axonactive.training.ebookapp.entity.Author;
 import com.axonactive.training.ebookapp.exception.ApiException;
-import com.axonactive.training.ebookapp.exception.ResourceNotFoundException;
 import com.axonactive.training.ebookapp.service.AuthorService;
 import com.axonactive.training.ebookapp.service.dto.AuthorDto;
 import com.axonactive.training.ebookapp.service.mapper.AuthorMapper;

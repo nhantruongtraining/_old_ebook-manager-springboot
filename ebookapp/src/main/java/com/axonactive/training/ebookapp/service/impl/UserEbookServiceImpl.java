@@ -43,7 +43,7 @@ public class UserEbookServiceImpl implements UserEbookService {
 
     @Override
     public List<UserEbook> findByEbookTitleContaining(String ebookTitle) {
-        return userEbookRepository.findByEbookTitleContaining(ebookTitle);
+        return userEbookRepository.findByEbookTitleContainingIgnoreCase(ebookTitle);
     }
 
     @Override

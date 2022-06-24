@@ -13,7 +13,7 @@ import java.util.List;
 public interface UserEbookRepository extends JpaRepository<UserEbook, Integer> {
 
     // Lookup ebook by names
-    List<UserEbook> findByEbookTitleContaining(String ebookTitle);
+    List<UserEbook> findByEbookTitleContainingIgnoreCase(String ebookTitle);
 
     @Query("SELECT new com.axonactive.training.ebookapp.service.dto.UserEbookDto(e.title, u.username, ue.favorite, ue.status) " +
             "FROM UserEbook ue , Ebook e, User u " +
