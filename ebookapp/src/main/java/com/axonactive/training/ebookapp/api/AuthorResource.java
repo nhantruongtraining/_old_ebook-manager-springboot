@@ -32,7 +32,7 @@ public class AuthorResource {
 
     //    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping("/{id}")
-    public ResponseEntity<AuthorDto> getAuthorById(@PathVariable(value = "id") Integer id) throws ResourceNotFoundException {
+    public ResponseEntity<AuthorDto> getAuthorById(@PathVariable(value = "id") Integer id) {
         Author author = authorService.findById(id)
                 .orElseThrow(ApiException::AuthorNotFound);
         return ResponseEntity.ok().body(AuthorMapper.INSTANCE.toDto(author));
@@ -55,7 +55,7 @@ public class AuthorResource {
     //    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<AuthorDto> update(@PathVariable(value = "id") Integer id,
-                                            @RequestBody AuthorRequest authorUpdate) throws ResourceNotFoundException {
+                                            @RequestBody AuthorRequest authorUpdate) {
         Author author = authorService.findById(id).orElseThrow(ApiException::AuthorNotFound);
         author.setFirstName(authorUpdate.getFirstName());
         author.setLastName(authorUpdate.getLastName());
@@ -67,7 +67,7 @@ public class AuthorResource {
 
     //    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable(value = "id") Integer id) throws ResourceNotFoundException {
+    public ResponseEntity<Void> delete(@PathVariable(value = "id") Integer id) {
         authorService.findById(id).orElseThrow(ApiException::AuthorNotFound);
         authorService.deleteById(id);
         return ResponseEntity.noContent().build();
