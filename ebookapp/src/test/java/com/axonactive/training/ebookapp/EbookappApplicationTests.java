@@ -18,5 +18,7 @@ class EbookappApplicationTests {
 		System.out.println(passwordUser);
 		String passwordAdmin = new BCryptPasswordEncoder().encode("aavn@admin123");
 		System.out.println(passwordAdmin);
+		String passwordAnotherUser = new BCryptPasswordEncoder().encode("1234");
+		System.out.println(passwordAnotherUser);
 	}
 }

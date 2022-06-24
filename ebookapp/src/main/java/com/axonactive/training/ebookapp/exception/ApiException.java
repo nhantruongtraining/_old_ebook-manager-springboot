@@ -16,6 +16,8 @@ public class ApiException {
     private static final String CONTRIBUTOR_NOT_FOUND_MSG = "Contributor Not Found";
     private static final String LANGUAGE_NOT_FOUND_MSG_KEY = "LanguageNotExisted";
     private static final String LANGUAGE_NOT_FOUND_MSG = "Language Not Found";
+    private static final String USER_NOT_FOUND_MSG_KEY = "UserNotExisted";
+    private static final String USER_NOT_FOUND_MSG = "User Not Found";
 
     public static ResponseException notFound(String messageKey, String message) {
         return new ResponseException(messageKey, message, HttpStatus.NOT_FOUND);
@@ -51,5 +53,9 @@ public class ApiException {
 
     public static ResponseException LanguageNotFound() {
         return notFound(LANGUAGE_NOT_FOUND_MSG_KEY, LANGUAGE_NOT_FOUND_MSG);
+    }
+
+    public static ResponseException UserNotFound() {
+        return notFound(USER_NOT_FOUND_MSG_KEY, USER_NOT_FOUND_MSG);
     }
 }
