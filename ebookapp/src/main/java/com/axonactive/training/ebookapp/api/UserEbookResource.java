@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Slf4j
+@CrossOrigin(origins = "http://localhost:8080")
 @RestController
 @RequestMapping(UserEbookResource.PATH)
 public class UserEbookResource {
