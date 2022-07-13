@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserEbookDto {
-    private Integer id;
     private String ebookTitle;
     private String ebookOwner;
     private boolean favorite;

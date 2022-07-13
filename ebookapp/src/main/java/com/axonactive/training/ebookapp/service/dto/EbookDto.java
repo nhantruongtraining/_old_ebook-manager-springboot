@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class EbookDto {
-    private Integer id;
     private String title;
     private String description;
     private String language;

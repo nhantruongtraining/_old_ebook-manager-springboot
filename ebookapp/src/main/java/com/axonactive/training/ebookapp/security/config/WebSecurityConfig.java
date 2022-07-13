@@ -64,11 +64,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
 				.antMatchers("/auth/**").permitAll()
 				.antMatchers("/test/**").permitAll()
-				.antMatchers("/api/languages/**").permitAll()
-				.antMatchers("/api/ebooks/**").permitAll()
-				.antMatchers("/api/userebooks/**").permitAll()
+//				.antMatchers("/api/languages/**").permitAll()
+//				.antMatchers("/api/ebooks/**").permitAll()
+//				.antMatchers("/api/userebooks/**").permitAll()
 				.anyRequest()
-				.authenticated();
+				.permitAll();
+//				.authenticated();
 
 		http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 	}
