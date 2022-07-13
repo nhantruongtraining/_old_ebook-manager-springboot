@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LanguageDto {
+    private Integer id;
     private String name;
     private String code;
 }
