@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ContributorDto {
+    private Integer id;
     private String ebookTitle;
     private String authorFirstName;
     private String authorLastName;

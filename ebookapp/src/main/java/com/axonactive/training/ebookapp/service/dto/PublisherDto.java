@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PublisherDto {
+    private Integer id;
     private String name;
     private String location;
     private String url;

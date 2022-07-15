@@ -10,6 +10,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AuthorDto {
+    private Integer id;
     private String firstName;
     private String lastName;
     private LocalDate dateOfBirth;

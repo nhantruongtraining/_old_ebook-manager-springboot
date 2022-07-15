@@ -13,6 +13,8 @@ public class EbookDto {
     private Integer id;
     private String title;
     private String description;
+    private String publishYear;
+    private String publisher;
     private String language;
     private String category;
 }

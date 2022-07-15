@@ -13,6 +13,7 @@ public interface EbookMapper {
     EbookMapper INSTANCE = Mappers.getMapper(EbookMapper.class);
     @Mapping(source = "category.value", target = "category")
     @Mapping(source = "language.name", target = "language")
+    @Mapping(source = "publisher.name", target = "publisher")
 
     EbookDto toDto(Ebook ebook);
     List<EbookDto> toDtos(List<Ebook> ebooks);
