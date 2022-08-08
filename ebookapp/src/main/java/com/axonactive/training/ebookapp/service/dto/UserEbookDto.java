@@ -1,6 +1,5 @@
 package com.axonactive.training.ebookapp.service.dto;
 
-import com.axonactive.training.ebookapp.entity.UserEbookStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,8 +8,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserEbookDto {
+    private Integer id;
     private String ebookTitle;
+    private String ebookDescription;
     private String ebookOwner;
     private boolean favorite;
-    private UserEbookStatus userEbookStatus;
+    private String userEbookStatus;
 }

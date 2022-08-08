@@ -51,24 +51,24 @@ public class UserEbookResource {
      * @param ebookTitle
      * @return a list of UserEbooks which title contain the string from param
      */
-    @GetMapping("/find")
-    public ResponseEntity<List<UserEbookDto>> getUserEbookByTitle(@RequestParam("title") String ebookTitle) {
-        log.info("find UserEbook by title {} ", ebookTitle);
-        if (ebookTitle == null || ebookTitle.isEmpty())
-            throw ApiException.badRequest("TitleEmpty", "Title is null or empty");
-        List<UserEbook> resultList = userEbookService.findByEbookTitleContaining(ebookTitle);
-        return ResponseEntity.ok().body(UserEbookMapper.INSTANCE.toDtos(resultList));
-    }
+//    @GetMapping("/find")
+//    public ResponseEntity<List<UserEbookDto>> getUserEbookByTitle(@RequestParam("title") String ebookTitle) {
+//        log.info("find UserEbook by title {} ", ebookTitle);
+//        if (ebookTitle == null || ebookTitle.isEmpty())
+//            throw ApiException.badRequest("TitleEmpty", "Title is null or empty");
+//        List<UserEbook> resultList = userEbookService.findByEbookTitleContaining(ebookTitle);
+//        return ResponseEntity.ok().body(UserEbookMapper.INSTANCE.toDtos(resultList));
+//    }
 
     /**
      * The following function returns all favorite UserEbook of a specific User
      * @param userId
      * @return List of favorite
      */
-    @GetMapping("/{userId}/favorites")
-    public ResponseEntity<List<UserEbookDto>> returnAllFavorite(@PathVariable(value = "userId") Integer userId) {
-        return ResponseEntity.ok(userEbookService.returnAllFavorite(userId));
-    }
+//    @GetMapping("/{userId}/favorites")
+//    public ResponseEntity<List<UserEbookDto>> returnAllFavorite(@PathVariable(value = "userId") Integer userId) {
+//        return ResponseEntity.ok(userEbookService.returnAllFavorite(userId));
+//    }
 
     @PostMapping
     public ResponseEntity<UserEbookDto> create(@RequestBody UserEbookRequest userEbookRequest) {

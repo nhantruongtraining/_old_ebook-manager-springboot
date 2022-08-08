@@ -41,15 +41,15 @@ public class UserEbookServiceImpl implements UserEbookService {
         userEbookRepository.deleteById(id);
     }
 
-    @Override
-    public List<UserEbook> findByEbookTitleContaining(String ebookTitle) {
-        return userEbookRepository.findByEbookTitleContainingIgnoreCase(ebookTitle);
-    }
+//    @Override
+//    public List<UserEbook> findByEbookTitleContaining(String ebookTitle) {
+//        return userEbookRepository.findByEbookTitleContainingIgnoreCase(ebookTitle);
+//    }
 
-    @Override
-    public List<UserEbookDto> returnAllFavorite(Integer userId) {
-        return userEbookRepository.returnAllFavorite(userId);
-    }
+//    @Override
+//    public List<UserEbookDto> returnAllFavorite(Integer userId) {
+//        return userEbookRepository.returnAllFavorite(userId);
+//    }
 
 
 }

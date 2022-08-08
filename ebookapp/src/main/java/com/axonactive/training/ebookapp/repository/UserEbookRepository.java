@@ -13,11 +13,11 @@ import java.util.List;
 public interface UserEbookRepository extends JpaRepository<UserEbook, Integer> {
 
     // Lookup ebook by names
-    List<UserEbook> findByEbookTitleContainingIgnoreCase(String ebookTitle);
-
-    @Query("SELECT new com.axonactive.training.ebookapp.service.dto.UserEbookDto(e.title, u.username, ue.favorite, ue.status) " +
-            "FROM UserEbook ue , Ebook e, User u " +
-            "WHERE ue.ebook.id = e.id AND ue.user.id = u.id AND ue.favorite = TRUE AND u.id = 2 " +
-            "ORDER BY e.title")
-    List<UserEbookDto> returnAllFavorite(@Param("userId") Integer userID);
+//    List<UserEbook> findByEbookTitleContainingIgnoreCase(String ebookTitle);
+//
+//    @Query("SELECT new com.axonactive.training.ebookapp.service.dto.UserEbookDto(e.title, u.username, ue.favorite, ue.status) " +
+//            "FROM UserEbook ue , Ebook e, User u " +
+//            "WHERE ue.ebook.id = e.id AND ue.user.id = u.id AND ue.favorite = TRUE AND u.id = 2 " +
+//            "ORDER BY e.title")
+//    List<UserEbookDto> returnAllFavorite(@Param("userId") Integer userID);
 }
