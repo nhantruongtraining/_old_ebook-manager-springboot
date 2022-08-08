@@ -34,4 +34,9 @@ public class EbookServiceImpl implements EbookService {
     public void deleteById(Integer id) {
         ebookRepository.deleteById(id);
     }
+
+    @Override
+    public List<Ebook> findByTitleContaining(String ebookTitle) {
+        return ebookRepository.findByTitleContainingIgnoreCase(ebookTitle);
+    }
 }

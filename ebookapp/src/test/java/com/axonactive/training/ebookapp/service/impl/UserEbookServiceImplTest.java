@@ -18,8 +18,8 @@ class UserEbookServiceImplTest {
     @Autowired
     UserEbookService userEbookService;
 
-    @Test
-    void findByEbookTitleContaining() {
-        assertEquals(1, userEbookService.findByEbookTitleContaining("Expectations").size());
-    }
+//    @Test
+//    void findByEbookTitleContaining() {
+//        assertEquals(1, userEbookService.findByEbookTitleContaining("Expectations").size());
+//    }
 }

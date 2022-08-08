@@ -11,4 +11,6 @@ public interface EbookService {
     Ebook save(Ebook ebook);
     Optional<Ebook> findById(Integer id);
     void deleteById(Integer id);
+
+    List<Ebook> findByTitleContaining(String ebookTitle);
 }
