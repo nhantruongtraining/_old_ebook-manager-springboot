@@ -11,6 +11,7 @@ import java.util.List;
 @Mapper
 public interface EbookMapper {
     EbookMapper INSTANCE = Mappers.getMapper(EbookMapper.class);
+    @Mapping(source = "id", target = "id")
     @Mapping(source = "category.value", target = "category")
     @Mapping(source = "language.name", target = "language")
     @Mapping(source = "publisher.name", target = "publisher")
