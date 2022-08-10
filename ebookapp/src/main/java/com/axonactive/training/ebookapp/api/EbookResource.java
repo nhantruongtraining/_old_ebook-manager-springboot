@@ -42,7 +42,7 @@ public class EbookResource {
         return ResponseEntity.ok().body(EbookMapper.INSTANCE.toDto(ebook));
     }
 
-    @GetMapping("/find")
+    @GetMapping("/")
     public ResponseEntity<List<EbookDto>> getEbookByTitle(@RequestParam("title") String ebookTitle) {
         if (ebookTitle == null || ebookTitle.isEmpty())
             throw ApiException.badRequest("TitleEmpty", "Title is null or empty.");
